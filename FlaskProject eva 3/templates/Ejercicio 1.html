@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Ensures padding doesn't affect width */
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Formulario de Notas</h1>
+
+    <!-- El formulario debe usar method="POST" y action="" para enviarse a la misma ruta -->
+    <form method="POST" action="">
+        <label for="nota1">Nota 1:</label>
+        <input type="text" id="nota1" name="nota1" required><br><br>
+
+        <label for="nota2">Nota 2:</label>
+        <input type="text" id="nota2" name="nota2" required><br><br>
+
+        <label for="nota3">Nota 3:</label>
+        <input type="text" id="nota3" name="nota3" required><br><br>
+
+        <label for="asistencia">Asistencia (%):</label>
+        <input type="text" id="asistencia" name="asistencia" required><br><br>
+
+        <input type="submit" value="Enviar">
+    </form>
+
+    <hr>
+
+    <h2>Promedio y estado de estudiante</h2>
+    <!-- Muestra esta sección SOLO si el promedio ha sido calculado (después del POST) -->
+    {% if promedio is not none and estado is not none %}
+        <p>El promedio es: <strong>{{ "%.2f"|format(promedio) }}</strong></p>
+        <p>El estado del estudiante es: <strong>{{ estado }}</strong></p>
+    {% endif %}
+
+    <!-- Muestra mensajes flash si hay errores -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div style="color: red;">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+</body>
+</html>
